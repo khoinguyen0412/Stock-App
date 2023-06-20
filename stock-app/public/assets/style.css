@@ -1,0 +1,60 @@
+body {
+    font-family: 'Nunito';
+}
+
+.modal {
+    overflow-y: auto;
+}
+
+.modal-open[style] {
+    padding-right: 0px !important;
+}
+
+.modal-open {
+overflow: auto;
+}
+
+label#modal-label{
+    font-weight: bold;
+    padding-bottom: 0px;
+}
+
+.form-control input[type="checkbox"] {
+    display: inline-block;
+    width: auto;
+}
+
+.form-control{
+    text-align: left;
+}
+
+.rc-label {
+    border-radius: 100px;
+    cursor: pointer;
+    padding: 0px 5px;
+    transition: .3s;
+    flex: 0 1 calc(20% - 10px);
+    max-width: 100px;
+}
+
+.rc-label:hover,
+.rc-label:focus-within {
+background: rgba(128,128,128,0.3);
+}
+
+.checkbox-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.table-container{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px 50px
+}
+
+.price-box{
+    background-color: white;
+    transition: background-color 500ms linear;
+}
