@@ -31,7 +31,7 @@ class Controller extends BaseController
             'email'=>$request->email,
             'stock_code'=>$request->stock_code,
             'user_price'=>$request->user_price,
-            'is_active'=> true ,
+            'is_active'=> 1 ,
         ]);
 
         return response()->noContent();

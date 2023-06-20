@@ -27,15 +27,17 @@ def comapre(current_list):
         mycursor.execute(sql)
         for x in mycursor:
             sender_info.append(x)
+    print(sender_info)
 
     if sender_info:
         for user in sender_info:
             email = user[0]
             user_price = user[1]
             stock_code = user[2]
-            sql = f'UPDATE users SET is_active=0 WHERE email = %s AND user_price = %s AND stock_code = %s'
-            val = (f"{email}",f"{user_price}",f"{stock_code}")
+            sql = 'UPDATE users SET is_active=FALSE WHERE email = %s AND user_price = %s AND stock_code = %s'
+            val = (email,user_price,stock_code)
             mycursor.execute(sql,val)
+            mydb.commit()
 
             email_receiver = f"{email}"
             stock_send = f"{stock_code}"

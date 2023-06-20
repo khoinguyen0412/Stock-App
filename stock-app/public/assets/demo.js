@@ -26,7 +26,7 @@ function uncheck(){
 
 function fetch_timer(){
     fetch()
-    setInterval(fetch, 30000)
+    setInterval(fetch, 60000)
 }
 
 function updateContent(element,content){
