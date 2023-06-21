@@ -1,4 +1,4 @@
-import crawl
+import new_crawl
 import send_mail
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -14,7 +14,7 @@ def home():
 
 @app.route('/get-data')
 def index():
-    data = crawl.demo
+    data = new_crawl.get_session()
     return jsonify(data)
 
 @app.route('/send-mail', methods=['POST'])
