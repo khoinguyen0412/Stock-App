@@ -14,7 +14,7 @@ def home():
 
 @app.route('/get-data')
 def index():
-    data = crawl.get_data()
+    data = crawl.demo
     return jsonify(data)
 
 @app.route('/send-mail', methods=['POST'])
