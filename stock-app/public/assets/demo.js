@@ -68,7 +68,7 @@ function fetch(){
         )
 
     }
-    xhttp.open('get',"http://127.0.0.1:5000/get-data")
+    xhttp.open('get',"http://127.0.0.1:8080/get-data")
     xhttp.send()
 }
 
