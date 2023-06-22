@@ -1,16 +1,22 @@
+import schedule 
+import time
+import requests
 from email.message import EmailMessage
 import ssl 
 import smtplib
 import mysql.connector
 import os
+import json
+
 from dotenv import load_dotenv
 
 load_dotenv()
-
 email_sender = os.getenv('MAIL_FROM_ADDRESS')
 email_password = os.getenv('MAIL_PASSWORD')
 
-def comapre(current_list):
+def send_mail():
+    r = requests.get('http://127.0.0.1:8080/get-data')
+    current_list = json.loads(r.text)
     mydb = mysql.connector.connect(
     host= os.getenv('DB_HOST'),
     user=os.getenv('DB_USERNAME'),
@@ -64,9 +70,12 @@ def comapre(current_list):
         return None
     
     mydb.close()
-       
 
 
+schedule.every(1).minutes.do(send_mail)
+
+while True:
+  schedule.run_pending()
+  time.sleep(0)
 
 
-    

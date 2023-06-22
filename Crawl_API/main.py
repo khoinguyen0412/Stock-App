@@ -2,7 +2,8 @@ import new_crawl
 import send_mail
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import json
+from waitress import serve
+
  
 datas =[]
 
@@ -18,12 +19,5 @@ def index():
     data = new_crawl.get_session()
     return jsonify(data)
 
-@app.route('/send-mail', methods=['POST'])
-def compare():
-    data = request.get_json()
-    curr_list = json.loads(data)
-    send_mail.comapre(curr_list)
-    return ('', 200)
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    serve(app, host="127.0.0.1", port=8080)
