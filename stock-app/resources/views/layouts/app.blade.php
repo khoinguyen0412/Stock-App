@@ -30,7 +30,7 @@
         @endif
       @endif
     </div>
-    <body class="font-sans antialiased" onload = "fetch_timer()">
+    <body class="font-sans antialiased">
              @yield('content')
     </body>
 

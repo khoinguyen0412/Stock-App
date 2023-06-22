@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-        <div class="table-container" >
+        <div class="table-container" onload = "fetch_timer()">
             <table border=10 cellpadding=20>
             <thead>
                  <tr>

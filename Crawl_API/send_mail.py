@@ -12,8 +12,8 @@ def comapre(current_list):
     mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="",
-    database="stockdb"
+    password="Billden2002@",
+    database="demo"
     )
 
     mycursor = mydb.cursor(buffered=True)
@@ -27,7 +27,6 @@ def comapre(current_list):
         mycursor.execute(sql)
         for x in mycursor:
             sender_info.append(x)
-    print(sender_info)
 
     if sender_info:
         for user in sender_info:

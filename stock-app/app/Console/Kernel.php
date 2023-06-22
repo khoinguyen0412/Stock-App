@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Console;
-
+use Illuminate\Support\Facades\Http;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +15,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function(){
+            $response = Http::get('http://127.0.0.1:5000/get-data');
+            $result = $response->body();
+            
+            Http::post('http://127.0.0.1:5000/send-mail',$result);
+        })->everyMinute();
     }
 
     /**

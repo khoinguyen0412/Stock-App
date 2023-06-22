@@ -11,7 +11,7 @@ def get_session():
     result = []
     driver = webdriver.Chrome(service=service)
     driver.get('http://stockboard.sbsc.com.vn/apps/StockBoard/SBSC/VN30INDEX.html')
-    time.sleep(1)
+    time.sleep(3)
 
     stock_list= ['ACB', 'BCM', 'BID', 'BVH', 'CTG', 'FPT', 'GAS', 'GVR', 'HDB', 'HPG']
 
@@ -23,7 +23,8 @@ def get_session():
                 "current_price": price}
         
         result.append(temp)
-
+    
     driver.quit()
 
     return result
+

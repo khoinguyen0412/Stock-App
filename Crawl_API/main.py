@@ -2,6 +2,7 @@ import new_crawl
 import send_mail
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import json
  
 datas =[]
 
@@ -20,7 +21,8 @@ def index():
 @app.route('/send-mail', methods=['POST'])
 def compare():
     data = request.get_json()
-    send_mail.comapre(data)
+    curr_list = json.loads(data)
+    send_mail.comapre(curr_list)
     return ('', 200)
 
 if __name__ == '__main__':
