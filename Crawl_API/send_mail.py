@@ -1,19 +1,21 @@
 from email.message import EmailMessage
 import ssl 
 import smtplib
-import mysql.connector 
+import mysql.connector
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 email_sender = "nguyenkhoi2227@gmail.com"
 email_password = "suxu qyqp dsix mnqr"
 
-
 def comapre(current_list):
     mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Billden2002@",
-    database="demo"
+    host= os.getenv('DB_HOST'),
+    user=os.getenv('DB_USERNAME'),
+    password=os.getenv('DB_PASSWORD'),
+    database=os.getenv('DB_DATABASE'),
     )
 
     mycursor = mydb.cursor(buffered=True)
