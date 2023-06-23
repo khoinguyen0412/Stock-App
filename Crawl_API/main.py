@@ -92,6 +92,6 @@ def send_mail():
     mydb.close()
 
 if __name__ == '__main__':
-    sched.add_job(id = "Send-mail", func=send_mail, trigger = 'interval', seconds = 15)
+    sched.add_job(id = "Send-mail", func=send_mail, trigger = 'interval', seconds = 60)
     sched.start()
     serve(app, host="127.0.0.1", port=my_port)
