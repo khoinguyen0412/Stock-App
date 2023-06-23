@@ -11,12 +11,17 @@ import mysql.connector
 import os
 import json
 from dotenv import load_dotenv
+from datetime import datetime
+import logging
+import time
 
 
 load_dotenv()
 email_sender = os.getenv('MAIL_FROM_ADDRESS')
 email_password = os.getenv('MAIL_PASSWORD')
 my_port = os.getenv('PORT')
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -30,6 +35,14 @@ def home():
 def index():
     data = new_crawl.get_session()
     return jsonify(data)
+
+@app.after_request
+def after_request(response):
+     timestamp = time.time()
+     date_time = datetime.fromtimestamp(timestamp)
+     timestamp = date_time.strftime('[%Y-%b-%d %H:%M]')
+     logging.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+     return response
 
 # ---------------------------------------------------------------------------------
 
@@ -94,4 +107,5 @@ def send_mail():
 if __name__ == '__main__':
     sched.add_job(id = "Send-mail", func=send_mail, trigger = 'interval', seconds = 60)
     sched.start()
+    print(f"Server is live on http://127.0.0.1:{my_port}")
     serve(app, host="127.0.0.1", port=my_port)
