@@ -2,11 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 import time
-import os
 
-
-service = Service(os.getenv('MY_PATH'))
-
+service = Service('C:\My Learning\laravel\web-scrapping\Crawl-website\chrome_driver')
 
 def get_session():
     result = []

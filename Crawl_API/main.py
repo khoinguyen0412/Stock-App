@@ -47,9 +47,11 @@ def after_request(response):
 # ---------------------------------------------------------------------------------
 
 def send_mail():
-    print('This is called')
+    print('Send mail is called')
     r = requests.get(f'http://127.0.0.1:{my_port}/get-data')
-    current_list = json.loads(r.text)
+    print("Data is grabbed")
+    data = r.json()
+    print("Converted to a list")
     mydb = mysql.connector.connect(
     host= os.getenv('DB_HOST'),
     user=os.getenv('DB_USERNAME'),
@@ -61,7 +63,7 @@ def send_mail():
     
     sender_info = []
 
-    for item in current_list:
+    for item in data:
         curr_code = item["stock_code"]
         curr_price = float(item["current_price"])
         sql = f'SELECT email,user_price,stock_code FROM users WHERE stock_code="{curr_code}" AND user_price="{curr_price}" AND is_active=1'
@@ -100,9 +102,11 @@ def send_mail():
                 smtp.sendmail(email_sender, email_receiver,em.as_string())
 
     else:
+        print("No mail to send")
         return None
     
     mydb.close()
+    print("Finish sending email")
 
 if __name__ == '__main__':
     sched.add_job(id = "Send-mail", func=send_mail, trigger = 'interval', seconds = 60)
