@@ -47,9 +47,7 @@ def after_request(response):
 # ---------------------------------------------------------------------------------
 
 def send_mail():
-    data = new_crawl.get_session()
-    print("Data is grabbed")
-    print(data)
+    data = new_crawl.get_session()+
     mydb = mysql.connector.connect(
     host= os.getenv('DB_HOST'),
     user=os.getenv('DB_USERNAME'),
