@@ -47,11 +47,9 @@ def after_request(response):
 # ---------------------------------------------------------------------------------
 
 def send_mail():
-    print('Send mail is called')
-    r = requests.get(f'http://127.0.0.1:{my_port}/get-data')
+    data = new_crawl.get_session()
     print("Data is grabbed")
-    data = r.json()
-    print("Converted to a list")
+    print(data)
     mydb = mysql.connector.connect(
     host= os.getenv('DB_HOST'),
     user=os.getenv('DB_USERNAME'),
@@ -109,7 +107,7 @@ def send_mail():
     print("Finish sending email")
 
 if __name__ == '__main__':
-    sched.add_job(id = "Send-mail", func=send_mail, trigger = 'interval', seconds = 60)
+    sched.add_job(id = "Send-mail", func=send_mail, trigger = 'interval', seconds = 50)
     sched.start()
     print(f"Server is live on http://127.0.0.1:{my_port}")
     serve(app, host="127.0.0.1", port=my_port)
