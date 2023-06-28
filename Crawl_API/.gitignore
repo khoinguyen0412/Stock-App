@@ -1,2 +1,5 @@
 /__pycache__
 /send_mail.py
+/Dockerfile
+.dockerignore
+.env

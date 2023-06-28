@@ -1,8 +1,10 @@
+chromedriver_binary==114.0.5735.90.0
+chromedriver_py==114.0.5735.90
 Flask==2.3.2
 Flask_APScheduler==1.12.4
 Flask_Cors==3.0.10
-mysql_connector_repackaged==0.3.1
+mysql-connector-python==8.0.33
 python-dotenv==1.0.0
-Requests==2.31.0
 selenium==4.10.0
 waitress==2.1.2
+webdriver_manager==3.8.6

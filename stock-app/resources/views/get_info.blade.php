@@ -23,7 +23,7 @@
 
             <h1 style="text-align:center ; margin:10px">Please check the box to track your stock</h1>
             
-            <div class = "form-control">
+            <div class = "form-control" id= "stock-checkbox">
                 <div class="checkbox-row"> 
                     @foreach($stock_codes as $stock_code)
                         <label class = "rc-label">

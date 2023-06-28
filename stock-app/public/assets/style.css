@@ -1,5 +1,16 @@
+#footer-container{
+    width: 100%;
+    height: 50px;
+}
+
+#stock-checkbox{
+    margin-bottom: 100px;
+}
+
 body {
     font-family: 'Nunito';
+    padding-right:0px !important;
+    margin-right:0px !important;
 }
 
 .modal {
@@ -9,6 +20,8 @@ body {
 .modal-open[style] {
     padding-right: 0px !important;
 }
+
+
 
 .modal-open {
 overflow: auto;
@@ -51,7 +64,7 @@ background: rgba(128,128,128,0.3);
 .table-container{
     display: flex;
     justify-content: center;
-    margin: 20px 0px 50px
+    margin: 100px 0px 50px
 }
 
 .price-box{

@@ -1,31 +1,35 @@
-import new_crawl
+from new_crawl import get_session
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_apscheduler import APScheduler
 from waitress import serve
-import requests
 from email.message import EmailMessage
 import ssl 
 import smtplib
 import mysql.connector
 import os
-import json
 from dotenv import load_dotenv
 from datetime import datetime
 import logging
 import time
 
+# =================================================================
+# Setting up
 
 load_dotenv()
 email_sender = os.getenv('MAIL_FROM_ADDRESS')
 email_password = os.getenv('MAIL_PASSWORD')
 my_port = os.getenv('PORT')
 
+logging.basicConfig(level = logging.INFO)
+logging.getLogger('apscheduler.executors.default').setLevel(logging.WARNING)
+logging.getLogger('apscheduler.scheduler').setLevel(logging.WARNING)
 
 
 app = Flask(__name__)
 CORS(app)
 sched = APScheduler()
+# =================================================================
 
 @app.route('/')
 def home():
@@ -33,21 +37,28 @@ def home():
 
 @app.route('/get-data')
 def index():
-    data = new_crawl.get_session()
-    return jsonify(data)
+    data = get_session()
+    if data is None:
+        return('',504)
+    else:
+        return jsonify(data)
 
 @app.after_request
 def after_request(response):
      timestamp = time.time()
      date_time = datetime.fromtimestamp(timestamp)
-     timestamp = date_time.strftime('[%Y-%b-%d %H:%M]')
-     logging.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+     timestamp = date_time.strftime('[%Y-%b-%d %H:%M:%S]')
+     logging.info('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
      return response
 
 # ---------------------------------------------------------------------------------
 
 def send_mail():
-    data = new_crawl.get_session()+
+    data = get_session()
+    if data is None:
+        print("Couldnt't get the data")
+        return None
+
     mydb = mysql.connector.connect(
     host= os.getenv('DB_HOST'),
     user=os.getenv('DB_USERNAME'),
@@ -72,7 +83,7 @@ def send_mail():
             email = user[0]
             user_price = user[1]
             stock_code = user[2]
-            sql = 'UPDATE users SET is_active=FALSE WHERE email = %s AND user_price = %s AND stock_code = %s'
+            sql = 'DELETE FROM users WHERE email = %s AND user_price = %s AND stock_code = %s'
             val = (email,user_price,stock_code)
             mycursor.execute(sql,val)
             mydb.commit()
@@ -98,14 +109,14 @@ def send_mail():
                 smtp.sendmail(email_sender, email_receiver,em.as_string())
 
     else:
-        print("No mail to send")
+        logging.info("No mail to send\n")
         return None
     
     mydb.close()
-    print("Finish sending email")
+    logging.info("Finish sending email\n")
 
 if __name__ == '__main__':
     sched.add_job(id = "Send-mail", func=send_mail, trigger = 'interval', seconds = 50)
     sched.start()
-    print(f"Server is live on http://127.0.0.1:{my_port}")
+
     serve(app, host="127.0.0.1", port=my_port)
