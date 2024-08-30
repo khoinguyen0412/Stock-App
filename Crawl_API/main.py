@@ -119,4 +119,4 @@ if __name__ == '__main__':
     sched.add_job(id = "Send-mail", func=send_mail, trigger = 'interval', seconds = 50)
     sched.start()
 
-    serve(app, host="127.0.0.1", port=my_port)
+    serve(app, host="0.0.0.0", port=my_port)
